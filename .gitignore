@@ -1,0 +1,52 @@
+
+
+#Dependency Reduced POMS
+dependency-reduced-pom.xml
+**/*-reduced-pom.xml
+
+**/target/
+**/.DS_Store
+**/.pydevproject
+**/.worksheet
+**/derby.log
+**/metastore_db/**
+
+# use glob syntax.
+syntax: glob
+**.ser
+**.class
+**.bak
+**.old
+
+# eclipse conf file
+**.settings
+**.classpath
+**.project
+**.manager
+**.scala_dependencies
+
+# idea
+**.idea
+**.iml
+**.ipr
+**.iws
+
+
+# other scm
+**.svn
+**.CVS
+**.hg*
+
+# switch to regexp syntax.
+#  syntax: regexp
+#  ^\.pc/
+target
+*~
+*.bak
+.settings
+.classpath
+
+
+
+
+
