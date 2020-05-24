@@ -1,4 +1,4 @@
-package dp.clibm_stair;
+package dp;
 
 /**
  * https://leetcode.com/problems/climbing-stairs/

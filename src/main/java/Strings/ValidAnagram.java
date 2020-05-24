@@ -1,4 +1,4 @@
-package String.anagram;
+package Strings;
 
 public class ValidAnagram {
     public static void main(String[] args) {
