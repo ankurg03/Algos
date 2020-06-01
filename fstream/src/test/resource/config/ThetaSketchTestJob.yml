@@ -1,0 +1,29 @@
+jobName: AnkurThetaSketchTestJob
+jobConfigClientProperties: !<DynamicBucketClientProperties>
+  bucketName: FStream-DE-Job.Local
+sourceConfig: !<SparkStreamingKafkaSourceConfig>
+  checkpointConfigPoolName: UIEStageHbase
+  infraConfig: !<KafkaInfraConfig>
+    poolName: UIEStageKafka
+  taskConfig: !<SparkStreamingKafkaSourceTaskConfig>
+    topics:
+      - thetaSketchTestTopic
+    sparkConfPoolName: FStreamSparkIntegrationTest
+    taskName: ThetaSketchTest
+
+operatorConfigs:
+  thetaSketchAggregate: !<AggregateOperatorConfig>
+    sinkOperatorConfig: !<SinkOperatorConfig>
+      executionClassName: com.flipkart.fdsg.fstream.sinks.hbase.HBaseAggregateSink
+      config: !<HBaseAggregateSinkConfig>
+        infraConfig: !<HbaseInfraConfig>
+          poolName: UIEStageHbase
+        taskConfig: !<HBaseAggregateSinkTaskConfig>
+          tableName: thetasketchtest
+          columnFamily: cf
+          batchSize: 1
+    disableRetries: true
+    aggregationMetaData:
+      setDataConfigs:
+        numOfEntries: 65536
+
