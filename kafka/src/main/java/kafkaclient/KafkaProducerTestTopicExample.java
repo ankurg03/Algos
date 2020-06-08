@@ -14,10 +14,10 @@ import java.util.stream.Stream;
 
 public class KafkaProducerTestTopicExample {
 
-    private final static String TOPIC = "thetaSketchTestTopic";
+    private final static String TOPIC = "ThetaSketchTestTopic2";
     private final static String BOOTSTRAP_SERVERS =
             "10.34.29.76:9092,10.33.18.178:9092,10.33.51.147:9092";
-    private final static String FILE_PATH = "/tmp/payloads";
+    private static String FILE_PATH = "/grid/vdb/ankur/payload";
     static int validRecord =0 ;
     static int totalRecord =0;
     static HashMap<String ,Integer> hashMap = new HashMap<>();
@@ -38,7 +38,6 @@ public class KafkaProducerTestTopicExample {
         }
     }
 
-
     public static void produce() throws IOException {
         Producer<Long, String> producer = createProducer();
         List<Future<RecordMetadata>> waitingForAck = new ArrayList<>();
@@ -49,7 +48,7 @@ public class KafkaProducerTestTopicExample {
                     map(KafkaProducerTestTopicExample::updatePayload).forEach(payload -> {
                 waitingForAck.add(producer.send(new ProducerRecord<>(TOPIC, payload)));
                 if (waitingForAck.size() > 30) {
-                    waitingForAck.stream().forEach(future -> {
+                waitingForAck.stream().forEach(future -> {
                         try {
                             RecordMetadata get = future.get();
                             offset[0] = get.offset();
@@ -85,23 +84,10 @@ public class KafkaProducerTestTopicExample {
 
     private static boolean canInsert(String payload) {
         return true;
-//        totalRecord ++;
-//        String ts = (((payload.split("\"timestamp\":"))[1]).split(","))[0];
-//        Date date = new Date(Long.parseLong(ts));
-//        String s = date.getDate() + "-"+ date.getMonth();
-//        if(new Random().nextInt(5000) ==300)
-//            System.out.println("processed = " + totalRecord);
-//       // System.out.println(s);
-//        if(s.equals("8-4"))
-//            return true;
-//        return false;
     }
 
     public static void main(String[] args) throws IOException {
-
+        FILE_PATH = args[0];
         produce();
-
-
-
     }
 }

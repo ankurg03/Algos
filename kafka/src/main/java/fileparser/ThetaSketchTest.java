@@ -1,16 +1,14 @@
 package fileparser;
 
-import com.yahoo.memory.Memory;
+
 
 import com.yahoo.sketches.theta.*;
 
-import java.sql.SQLOutput;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.concurrent.*;
 import java.util.UUID;
-import java.util.concurrent.atomic.AtomicLong;
 
 public class ThetaSketchTest {
 
@@ -33,6 +31,29 @@ public class ThetaSketchTest {
 
 
     Runnable insert = () -> {
+        for (int i =0; i< perExecutorInsertInSketch1; i++) {
+            synchronized (this) {
+                counter.merge(Thread.currentThread().getName(), 1L, Long::sum);
+
+
+                String random = UUID.randomUUID().toString();
+                if (Math.round(Math.random() * 100000) == 100L)
+                    System.out.println(Thread.currentThread().getName() + " remaining % " +
+                            100 * (perExecutorInsertInSketch1 - counter.get(Thread.currentThread().getName())) / perExecutorInsertInSketch1);
+
+                if (counter.get(Thread.currentThread().getName()) <= perExecutorInsertInSketch1)
+                    sketch1.update(random);
+                if (counter.get(Thread.currentThread().getName()) <= perExecutorInsertInSketch2)
+                    sketch2.update(random);
+                if (counter.get(Thread.currentThread().getName()) > perExecutorInsertInSketch1 &&
+                        counter.get(Thread.currentThread().getName()) > perExecutorInsertInSketch2)
+                    break;
+            }
+        }
+
+    };
+
+    Runnable writeToFile = () -> {
         for (int i =0; i< perExecutorInsertInSketch1; i++) {
             synchronized (this) {
                 counter.merge(Thread.currentThread().getName(), 1L, Long::sum);

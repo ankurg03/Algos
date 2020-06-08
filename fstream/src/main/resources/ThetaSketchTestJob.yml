@@ -7,9 +7,9 @@ sourceConfig: !<SparkStreamingKafkaSourceConfig>
     poolName: FStreamKafka
   taskConfig: !<SparkStreamingKafkaSourceTaskConfig>
     topics:
-      - thetaSketchTestTopic
+      - ThetaSketchTestTopic2
     sparkConfPoolName: FStreamSpark
-    taskName: ThetaSketchTest
+    taskName: ThetaSketchTest2
 
 operatorConfigs:
   thetaSketchAggregate: !<AggregateOperatorConfig>
@@ -19,9 +19,9 @@ operatorConfigs:
         infraConfig: !<HbaseInfraConfig>
           poolName: FStreamHBaseD
         taskConfig: !<HBaseAggregateSinkTaskConfig>
-          tableName: thetasketchtest
+          tableName: thetasketchtest2
           columnFamily: cf
-          batchSize: 1
+          batchSize: 3
     disableRetries: true
     aggregationMetaData:
       setDataConfigs:

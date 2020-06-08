@@ -296,13 +296,7 @@ public class KafkaConsumerExample {
     }
 
 
-    static void test() throws JsonProcessingException {
-        ObjectMapper mapper = new ObjectMapper();
-        String samp = "{\"eventType\":\"DiscoveryContentImpression\",\"ndid\":\"5003007\",\"visit_ids\":\"7b52310807ca5b03dd4e421bb2f1fa94-1589858145637\",\"cart_fids\":null,\"ts_date_hour\":\"2020051908\",\"timestamp\":1589858379283,\"evnt\":\"BAU\",\"mpid\":\"FLIPKART\",\"vert\":\"Handset\",\"sc\":\"Mobile\",\"fm\":\"ORGANIC\",\"mmodel\":\"NA\",\"counit_ids\":null,\"brand\":\"NA\",\"cocmplt_ids\":null,\"fids\":null,\"devid\":\"7b52310807ca5b03dd4e421bb2f1fa94\",\"subcat\":\"Handset\",\"dev_ids\":\"7b52310807ca5b03dd4e421bb2f1fa94\",\"account_id\":\"ACC8CBB40117A3546FB8A684FC0982608E23\",\"bu\":\"Mobile\",\"ns_fids\":null,\"fid_visits\":null,\"mc\":\"DIRECT\",\"coinit_ids\":null,\"lckin\":\"ACTIVE\",\"oos_fids\":null,\"platform\":\"APP\",\"cat\":\"Mobile\",\"pin\":\"600044\",\"zone\":\"NA\",\"fsn\":\"NA\"}";
-        JsonNode tree = mapper.readTree(samp);
-        System.out.println(tree);
-        System.out.println(tree.get("sc"));
-    }
+
 
     private static void subscribeConsumer(Consumer<Long, String> consumer) {
         consumer.subscribe(Collections.singletonList(TOPIC));

@@ -32,7 +32,7 @@ class ThetaSketchIntegrationTest extends FStreamIntegrationTestSuite
       execute(ThetaSketchTest, Array("Stage", "config/ThetaSketchTestJob.yml"))
 
       var trafficAggs = getFromHBase(
-        tableName = "probabilistic_data_tables:thetasketchtest",
+        tableName = "probabilistic_data_tables:thetasketchtest_daily_202006",
         rowkeys = Seq(),
         columnFamilies = Seq("cf"),
         dimensions = Seq("dim", "dim1"),

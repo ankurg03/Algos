@@ -13,13 +13,10 @@ object ThetaSketchTest extends FlipkartFStreamSparkJob[TestClass] {
           }, "testAggFact"
         ).aggregate("thetaSketchAggregate")
   }
-
-
-  @TimePartitions(values = Array("daily"))
-  case class AggFactTest(
-                          @(Dimension@field)(name = "dim") dim: String,
-                          @(SetData@field)(name = "sketch")sketch: String,
-                          @(TimeStamp@field) ts: Long
-                        )
-
 }
+@TimePartitions(values = Array("daily"))
+case class AggFactTest(
+                        @(Dimension@field)(name = "dim") dim: String,
+                        @(SetData@field)(name = "sketch")sketch: String,
+                        @(TimeStamp@field) ts: Long
+                      )
