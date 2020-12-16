@@ -1,6 +1,6 @@
 import random
 import sys
-from Kafka import utility, kafka_utility, zk_utility, custom_logging
+from kafka import utility, kafka_utility, zk_utility, custom_logging
 
 log = custom_logging.setup_logger("INFO")
 

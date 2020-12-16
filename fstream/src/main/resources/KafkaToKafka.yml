@@ -1,0 +1,23 @@
+jobName: KafkaToKafkaSampleJob
+jobConfigClientProperties: !<DynamicBucketClientProperties>
+  bucketName: FStream-Job.Prod
+sourceConfig: !<SparkStreamingKafkaSourceConfig>
+  checkpointConfigPoolName: FStreamHBase2x
+  infraConfig: !<KafkaInfraConfig>
+    poolName: UIEStageKafkaHyd
+  taskConfig: !<SparkStreamingKafkaSourceTaskConfig>
+    topics:
+      - dart.test.bigfoot.demo.test_event4
+    sparkConfPoolName: FStreamSpark
+    taskName: kafkaSink
+
+operatorConfigs:
+  kafkaSink: !<SinkOperatorConfig>
+    executionClassName: com.flipkart.fdsg.fstream.sinks.kafka.KafkaSink
+    config: !<KafkaSinkConfig>
+      infraConfig: !<KafkaInfraConfig>
+        poolName: UIEStageKafkaHyd
+      taskConfig: !<KafkaSinkTaskConfig>
+        converterClassName: com.flipkart.fdsg.fstream.converters.kafka.KafkaConverter
+        topicName: sample.sink.topic
+        dataPath: $

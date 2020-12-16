@@ -1,29 +1,27 @@
-jobName: AnkurThetaSketchTestJob
+jobName: KafkaToAggregateSampleJob
 jobConfigClientProperties: !<DynamicBucketClientProperties>
-  bucketName: FStream-DE-Job.Prod
+  bucketName: FStream-Job.Prod
 sourceConfig: !<SparkStreamingKafkaSourceConfig>
-  checkpointConfigPoolName: FStreamHBaseD
+  checkpointConfigPoolName: UIEStageHbaseHyd
   infraConfig: !<KafkaInfraConfig>
-    poolName: FStreamKafka
+    poolName: UIEStageKafkaHyd
   taskConfig: !<SparkStreamingKafkaSourceTaskConfig>
     topics:
-      - ThetaSketchTestTopic2
+      - sampleTopic1
+      - sampleTopic2
     sparkConfPoolName: FStreamSpark
-    taskName: ThetaSketchTest2
+    taskName: put_aggregate_task
 
 operatorConfigs:
-  thetaSketchAggregate: !<AggregateOperatorConfig>
+  putAggregate: !<AggregateOperatorConfig>
     sinkOperatorConfig: !<SinkOperatorConfig>
       executionClassName: com.flipkart.fdsg.fstream.sinks.hbase.HBaseAggregateSink
       config: !<HBaseAggregateSinkConfig>
         infraConfig: !<HbaseInfraConfig>
-          poolName: FStreamHBaseD
+          poolName: UIEStageHbaseHyd
         taskConfig: !<HBaseAggregateSinkTaskConfig>
-          tableName: thetasketchtest2
+          tableName: put_aggregates
           columnFamily: cf
           batchSize: 3
     disableRetries: true
-    aggregationMetaData:
-      setDataConfigs:
-        numOfEntries: 65536
 

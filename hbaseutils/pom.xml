@@ -8,6 +8,28 @@
         <version>1.0-SNAPSHOT</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
+<!--    <repositories>-->
+<!--    <repository>-->
+<!--        <id>central</id>-->
+<!--        <url>http://central.maven.org/maven2/</url>-->
+<!--    </repository>-->
+<!--        <repository>-->
+<!--            <id>hadoop</id>-->
+<!--            <url>https://mvnrepository.com/artifact/hadoop-util/hadoop-util</url>-->
+<!--        </repository>-->
+<!--    </repositories>-->
+    <distributionManagement>
+        <snapshotRepository>
+            <id>fk-art-snapshot</id>
+            <name>libs-snapshot</name>
+            <url>http://artifactory.fkinternal.com/artifactory/v1.0/artifacts/libs-snapshots-local</url>
+        </snapshotRepository>
+        <repository>
+            <id>fk-art-release</id>
+            <name>libs-rel</name>
+            <url>http://artifactory.fkinternal.com/artifactory/v1.0/artifacts/libs-release-local</url>
+        </repository>
+    </distributionManagement>
 
     <artifactId>hbaseutils</artifactId>
     <dependencies>
@@ -17,18 +39,31 @@
             <version>0.12.2</version>
         </dependency>
         <!-- https://mvnrepository.com/artifact/org.apache.hbase/hbase -->
-        <dependency>
-            <groupId>org.apache.hbase</groupId>
-            <artifactId>hbase</artifactId>
-            <version>0.90.3</version>
-        </dependency>
+<!--        <dependency>-->
+<!--            <groupId>org.apache.hbase</groupId>-->
+<!--            <artifactId>hbase</artifactId>-->
+<!--            <version>0.90.3</version>-->
+<!--        </dependency>-->
 
         <!-- https://mvnrepository.com/artifact/org.apache.hbase/hbase-client -->
+<!--        <dependency>-->
+<!--            <groupId>org.apache.hbase</groupId>-->
+<!--            <artifactId>hbase-client</artifactId>-->
+<!--            <version>2.2.3</version>-->
+<!--        </dependency>-->
+
+<!--        <dependency>-->
+<!--            <groupId>org.apache.hbase</groupId>-->
+<!--            <artifactId></artifactId>-->
+<!--            <version>2.2.3</version>-->
+<!--        </dependency>-->
+
         <dependency>
-            <groupId>org.apache.hbase</groupId>
-            <artifactId>hbase-client</artifactId>
-            <version>2.2.3</version>
+            <groupId>com.flipkart.fdsg.fstream</groupId>
+            <artifactId>hbase-shaded</artifactId>
+            <version>1.5.0-SNAPSHOT</version>
         </dependency>
+
 
         <dependency>
             <groupId>com.yahoo.datasketches</groupId>
@@ -42,13 +77,18 @@
             <artifactId>guava</artifactId>
             <version>12.0</version>
         </dependency>
-
-        <!-- https://mvnrepository.com/artifact/hadoop-util/hadoop-util -->
         <dependency>
-            <groupId>hadoop-util</groupId>
-            <artifactId>hadoop-util</artifactId>
-            <version>0.2.8</version>
+            <groupId>com.flipkart.fdsg.fstream</groupId>
+            <artifactId>hbase-shaded</artifactId>
+            <version>0.0.10</version>
         </dependency>
+
+        <!--        &lt;!&ndash; https://mvnrepository.com/artifact/hadoop-util/hadoop-util &ndash;&gt;-->
+<!--        <dependency>-->
+<!--            <groupId>hadoop-util</groupId>-->
+<!--            <artifactId>hadoop-util</artifactId>-->
+<!--            <version>0.2.8</version>-->
+<!--        </dependency>-->
 
 
 

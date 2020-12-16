@@ -4,7 +4,7 @@ except ImportError:
     import json
 
 from kazoo.client import KazooClient
-from Kafka import constants, custom_logging
+from kafka import constants, custom_logging
 
 
 log = custom_logging.setup_logger("INFO")

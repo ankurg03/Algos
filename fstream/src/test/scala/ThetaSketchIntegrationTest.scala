@@ -29,7 +29,7 @@ class ThetaSketchIntegrationTest extends FStreamIntegrationTestSuite
 
   "ConversionFunnelTest" should {
     "validate ppv count " in {
-      execute(ThetaSketchTest, Array("Stage", "config/ThetaSketchTestJob.yml"))
+      execute(KafkaToAggregate, Array("Stage", "config/ThetaSketchTestJob.yml"))
 
       var trafficAggs = getFromHBase(
         tableName = "probabilistic_data_tables:thetasketchtest_daily_202006",

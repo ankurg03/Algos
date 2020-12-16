@@ -2,7 +2,9 @@ import com.yahoo.memory.Memory;
 import com.yahoo.sketches.theta.CompactSketch;
 import com.yahoo.sketches.theta.PairwiseSetOperations;
 import com.yahoo.sketches.theta.Sketch;
-import org.apache.hadoop.conf.Configuration;
+
+//import org.apache.hadoop.conf.Configuration;
+
 import org.apache.hadoop.hbase.HBaseConfiguration;
 import org.apache.hadoop.hbase.HTableDescriptor;
 import org.apache.hadoop.hbase.TableName;
@@ -12,16 +14,18 @@ import org.apache.hadoop.hbase.util.Bytes;
 import java.io.IOException;
 import java.util.HashMap;
 
+//import static org.apache.hadoop.hbase.HBaseConfiguration.*;
+
 public class HBaseTool {
     public static void main(String[] args) throws IOException {
         HBaseTool hbaseUtils = new HBaseTool();
-        Configuration conf = hbaseUtils.getConfiguration();
+        org.apache.hadoop.conf.Configuration conf = hbaseUtils.getConfiguration();
         Connection connection = hbaseUtils.getConnection(conf);
         hbaseUtils.performOperation(connection);
     }
 
-    private Configuration getConfiguration() {
-        Configuration conf = new Configuration();
+    private org.apache.hadoop.conf.Configuration getConfiguration() {
+        org.apache.hadoop.conf.Configuration conf = HBaseConfiguration.create();
         conf.set("hbase.client.operation.timeout", "50000");
         conf.set("hbase.client.pause","1000");
         conf.set("hbase.client.retries.number","10");
@@ -30,7 +34,7 @@ public class HBaseTool {
         conf.set("hbase.rpc.timeout","50000");
         conf.set("hbase.security.authorization","false");
         conf.set("hbase.zookeeper.property.clientPort","2181");
-        conf.set("hbase.zookeeper.quorum","prod-fstream-hbased-zkjn-05,prod-fstream-hbased-zkjn-06,prod-fstream-hbased-zkjn-07,prod-fstream-hbased-zkjn-08,prod-fstream-hbased-zkjn-09");
+        conf.set("hbase.zookeeper.quorum","10.53.83.31,10.52.19.16,10.53.227.75,10.50.66.200,10.51.147.120");
 //        conf.set("hbase.zookeeper.quorum","stage-fstream-zk-jn-0001,stage-fstream-zk-jn-0002,stage-fstream-zk-jn-0003");
 
         conf.set("zookeeper.client.sasl","false");
@@ -40,10 +44,10 @@ public class HBaseTool {
         conf.set("zookeeper.sasl.client","false");
         conf.set("zookeeper.session.timeout","10000");
         conf.set("zookeeper.znode.parent","/hbase-unsecure");
-        return HBaseConfiguration.create(conf);
+        return conf;
     }
 
-    private Connection getConnection(Configuration conf) throws IOException {
+    private Connection getConnection(org.apache.hadoop.conf.Configuration conf) throws IOException {
         return ConnectionFactory.createConnection(conf);
     }
 
@@ -51,7 +55,7 @@ public class HBaseTool {
 //        getTableList(connection);
 
 //        getSizeOfAllRows(connection, "probabilistic_data_tables:test.cdm_traffic.agg_master_daily_202002");
-        getCount(connection, "probabilistic_data_tables:cdm_traffic.v2_agg_test_daily_202005");
+        getCount(connection, "probabilistic_data_tables:test.ft.cdm_traffic.agg_master_NEW_COP_NEW_JAR_daily_202008");
 //        getCount(connection, "probabilistic_data_tables:cdm_traffic.agg_master_daily_202005");
 
 //        getSize(connection, "setdata.test.cdm.agg_mobile_model_daily_201910", "20191001_f28aaf94973d0e628711ffb1c996c70b0405b32ee7dd5a5f110fb431079f0714_46d3fab5842ac0cfe60360625733c7a5e489ffc42268cb5e28bf180cf7911ff8_20ef0f0c8d0eea98772412cea9b3b92612e3e53cb5e59152b5703165f56e8a53");
@@ -71,13 +75,16 @@ public class HBaseTool {
     //"a9f13fe76d87c628cc06cb05e8ba8a2ddc915d1c0a1bece7895653025d711626"
 
     private void getCount(Connection connection, String tableName) throws IOException {
+        System.out.println("Inside get count method");
         Scan scan = new Scan();
         HashMap<String, CompactSketch> hashMap = new HashMap<>();
 
         Table table = connection.getTable(TableName.valueOf(tableName));
+        System.out.println("now scaning as connected with table "+ tableName);
         ResultScanner scanner = table.getScanner(scan);
 
         for (Result rr : scanner) {
+            System.out.println("in progress");
 
             if (rr.getFamilyMap(Bytes.toBytes("cf")).containsKey(Bytes.toBytes("visit_ids")) ) {
                 if (rr.getFamilyMap(Bytes.toBytes("cf")).containsKey(Bytes.toBytes("platform")) &&

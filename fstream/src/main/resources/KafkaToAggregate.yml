@@ -1,0 +1,26 @@
+jobName: KafkaToAggregateSampleJob
+jobConfigClientProperties: !<DynamicBucketClientProperties>
+  bucketName: FStream-Job.Prod
+sourceConfig: !<SparkStreamingKafkaSourceConfig>
+  checkpointConfigPoolName: FStreamHBaseD
+  infraConfig: !<KafkaInfraConfig>
+    poolName: FStreamDartProdKafka
+  taskConfig: !<SparkStreamingKafkaSourceTaskConfig>
+    topics:
+      - dart.fki.bigfoot.test.KafkaTestEntity
+    sparkConfPoolName: FStreamSpark
+    taskName: put_aggregate_task
+
+operatorConfigs:
+  putAggregate: !<AggregateOperatorConfig>
+    sinkOperatorConfig: !<SinkOperatorConfig>
+      executionClassName: com.flipkart.fdsg.fstream.sinks.hbase.HBaseAggregateSink
+      config: !<HBaseAggregateSinkConfig>
+        infraConfig: !<HbaseInfraConfig>
+          poolName: FStreamHBaseD
+        taskConfig: !<HBaseAggregateSinkTaskConfig>
+          tableName: put_aggregates
+          columnFamily: cf
+          batchSize: 3
+    disableRetries: true
+

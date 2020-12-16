@@ -1,6 +1,6 @@
 import json
 import re
-from Kafka import constants, utility, custom_logging
+from kafka import constants, utility, custom_logging
 
 log = custom_logging.setup_logger("INFO")
 

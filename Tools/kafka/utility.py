@@ -1,6 +1,6 @@
 import subprocess
 import getopt
-from Kafka import custom_logging
+from kafka import custom_logging
 
 log = custom_logging.setup_logger("INFO")
 
